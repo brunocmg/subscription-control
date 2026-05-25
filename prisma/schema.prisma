@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  CANCELLED
+}
+
+enum EventType {
+  subscription_created
+  payment_success
+  payment_failed
+}
+
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+}
+
+model Plan {
+  id            String         @id @default(uuid())
+  name          String
+  price         Decimal        @db.Decimal(10, 2)
+  billingCycle  BillingCycle
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id              String             @id @default(uuid())
+  plan            Plan               @relation(fields: [planId], references: [id])
+  planId          String
+  customerEmail   String             @unique
+  status          SubscriptionStatus
+  nextBillingDate DateTime
+
+  @@index([planId])
+}
+
+model Event {
+  id        String    @id @default(uuid())
+  type      EventType
+  data      Json
+  processed Boolean   @default(false)
+}
