@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Expose, Transform } from 'class-transformer';
-import { SubscriptionStatus } from '@prisma/client';
 
 type CreateSubscriptionBody = {
   plan_id?: string;
@@ -29,13 +28,11 @@ export class CreateSubscriptionDto {
 export class ResponseSubscriptionDto {
   @IsString()
   @IsNotEmpty()
-  @Expose({ name: 'subscription_id' })
-  readonly subscriptionId: string;
+  readonly subscription_id: string;
 
   @IsNotEmpty()
-  readonly status: SubscriptionStatus;
+  readonly status: string;
 
   @IsNotEmpty()
-  @Expose({ name: 'next_billing_date' })
-  readonly nextBillingDate: string;
+  readonly next_billing_date: string;
 }
