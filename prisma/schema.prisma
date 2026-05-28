@@ -4,8 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -31,7 +30,7 @@ enum BillingCycle {
 }
 
 model Plan {
-  id            String         @id @default(uuid())
+  id            String         @id 
   name          String
   price         Decimal        @db.Decimal(10, 2)
   billingCycle  BillingCycle
@@ -39,7 +38,7 @@ model Plan {
 }
 
 model Subscription {
-  id              String             @id @default(uuid())
+  id              String             @id 
   plan            Plan               @relation(fields: [planId], references: [id])
   planId          String
   customerEmail   String             @unique
@@ -50,7 +49,7 @@ model Subscription {
 }
 
 model Event {
-  id        String    @id @default(uuid())
+  id        String    @id
   type      EventType
   data      Json
   processed Boolean   @default(false)
