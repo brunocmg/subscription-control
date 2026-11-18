@@ -68,14 +68,14 @@ Risk tag in brackets: [G] green, [Y] yellow, [R] red.
 
 ## Current state
 
-The repo started on NestJS with one working endpoint (`POST /api/subscriptions`), a Prisma schema and a Compose file with Postgres. Phase 0 begins with migrating to Fastify; the reusable parts are the Prisma schema (to be adjusted), the Compose db service and the subscription + outbox transaction.
+The base is Fastify + TypeScript + Vitest, with Prisma (client generated into `src/generated/prisma`) and a Compose file running the API and Postgres. There are no endpoints yet: `/health` is next. The earlier NestJS `POST /api/subscriptions` lives in the git history on `feat/api-endpoints` and is rewritten in Phase 2, after the new schema.
 
 ## Phase 0: Foundation
 
 Done when `docker compose up` runs the API, Postgres and RabbitMQ, and CI is green.
 
-- [ ] [G] Add ROADMAP.md and CLAUDE.md
-- [ ] [Y] Migrate from NestJS to Fastify + Zod + Vitest, path aliases, `.env.example`
+- [x] [G] Add ROADMAP.md and CLAUDE.md
+- [x] [Y] Migrate from NestJS to Fastify + Zod + Vitest, path aliases, `.env.example`
 - [ ] [G] `/health` and structured logging (pino)
 - [ ] [G] Env validation with Zod (fail fast on missing variables)
 - [ ] [G] Docker Compose with Postgres and RabbitMQ (management UI enabled)
